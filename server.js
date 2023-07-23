@@ -1,29 +1,18 @@
-// Import Express.js
 const express = require('express');
-// Import built-in Node.js package 'path' to resolve path of files that are located on the server
-const path = require('path');
-// Import notes from db.json
-const notes = require('./db/db.json')
-// file system, standard library package for reading and writing files
-const fs = require('fs')
-// Initialize an instance of Express.js
+const {Api} = require('./routes/api');
+
 const app = express();
-// Specify on which port the Express.js server will run
-const PORT = 3001;
 
-// Static middleware pointing to the public folder
-app.use(express.static('public'));
-// Middleware for parsing application/json and urlencoded data
-app.use(express.json());
+const PORT = process.env.PORT || 3001;
+const BASE_URL = process.env.BASE_URL || 'localhost';
+const api = new Api('./db/db.json');
+
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static('public'));
+app.use('/api', api.router);
+//app.on('exit', api.store.save());
 
-// GET route to get all of the notes
-app.get('/api/notes', (req, res) => res.json(notes));
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
-  });
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/notes.html'));
-  });
+  app.listen(PORT, () => {
+    console.log(`Serving file at http://${BASE_URL}:${PORT}`);
+  })
