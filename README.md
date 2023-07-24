@@ -4,6 +4,9 @@
 
 An express.js back end application used to write and save notes
 
+![Screenshot 2023-07-24 182846](https://github.com/ChuyiengVang/NoteTaker/assets/124082784/ff1bf6a4-a3e0-410c-8400-72fa798ca7b2)
+![Screenshot 2023-07-24 182858](https://github.com/ChuyiengVang/NoteTaker/assets/124082784/5f1069a1-c261-4e17-bfb2-eba94fab8ce5)
+
 # About
 
 Your assignment is to modify starter code to create an application called Note Taker that can be used to write and save notes. This application will use an Express.js back end and will save and retrieve note data from a JSON file.
