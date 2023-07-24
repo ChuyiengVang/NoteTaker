@@ -1,18 +1,19 @@
 const express = require('express');
-const {Api} = require('./routes/api');
+const apiRoutes = require('./routes/api');
+const htmlRoutes = require('./routes/html');
 
 const app = express();
 
 const PORT = process.env.PORT || 3001;
 const BASE_URL = process.env.BASE_URL || 'localhost';
-const api = new Api('./db/db.json');
 
+// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
-app.use('/api', api.router);
-//app.on('exit', api.store.save());
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
-  app.listen(PORT, () => {
-    console.log(`Serving file at http://${BASE_URL}:${PORT}`);
-  })
+app.listen(PORT, () => {
+  console.log(`Serving file at http://${BASE_URL}:${PORT}`);
+})

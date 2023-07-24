@@ -1,39 +1,47 @@
-const path = require('path');
-const express = require('express');
-const { DataStore } = require('../fileHandler');
+const router = require('express').Router();
+const util = require('util')
+const fs = require('fs');
+const readFilesAsync = util.promisify(fs.readFile);
+const writeFilesAsync = util.promisify(fs.writeFile);
 
-class Api {
-    constructor(filePath) {
-        this.router = express.Router()
-        this.store = new DataStore(filePath)
-        this.store.read();
 
-        this.router.get('/posts', (req, res) => {
-            res.json(this.store.data.posts);
+// reads db.json and returns saved notes
+router.get('/notes', (req, res) => {
+
+    readFilesAsync('./db/db.json', 'utf8')
+    .then((data) => { 
+
+        notes = JSON.parse(data);
+        res.json(notes);
+
+    });
+});
+
+// adds new notes to the db.json and body
+router.post('/notes', (req, res) => {
+
+    readFilesAsync('./db/db.json', 'utf8')
+    .then((data) => {
+
+        notes = JSON.parse(data);
+        let userNote = req.body;
+        userNote.id = Math.floor(Math.random() * 100);
+        notes.push(userNote);
+
+        writeFilesAsync('./db/db.json', JSON.stringify(notes))
+        .then((data) => {
+
+            console.log('Success');
+
         });
 
-        this.router.get('/posts/:id', (req, res) => {
-            res.json(this.store.data.posts[req.id]);
-        });
+        res.json(notes);
 
-        this.router.post('/posts/:id', (req, res) => {
-            this.store.data.posts[req.id] = req.postBody;
-            res.json(JSON.stringify({
-                result: 'success'
-            }));
-            this.store.save()
-        });
+    });
+});
 
-        this.router.delete('/posts/:id', (req, res) => {
-            try {
-            delete this.store.data.posts[req.id];
-            } catch(err) {
-                res.status(404).json(JSON.stringify({
-                    error: err
-                }))
-            }
-            res.json("{resut: 'Success'}");
-        });
-    }
-};
-module.exports = { Api };
+//router.delete('/api/notes/:id', (req, res) => {
+    
+//})
+
+module.exports = router;
