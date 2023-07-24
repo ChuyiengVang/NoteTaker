@@ -11,7 +11,7 @@ router.get('/notes', (req, res) => {
     readFilesAsync('./db/db.json', 'utf8')
     .then((data) => { 
 
-        notes = JSON.parse(data);
+        let notes = JSON.parse(data);
         res.json(notes);
 
     });
@@ -23,15 +23,17 @@ router.post('/notes', (req, res) => {
     readFilesAsync('./db/db.json', 'utf8')
     .then((data) => {
 
-        notes = JSON.parse(data);
+        let notes = JSON.parse(data);
         let userNote = req.body;
+
+        // randomize id number
         userNote.id = Math.floor(Math.random() * 100);
         notes.push(userNote);
 
         writeFilesAsync('./db/db.json', JSON.stringify(notes))
         .then((data) => {
 
-            console.log('Success');
+            console.log('Successly Saved!!!');
 
         });
 
@@ -40,8 +42,22 @@ router.post('/notes', (req, res) => {
     });
 });
 
-//router.delete('/api/notes/:id', (req, res) => {
-    
-//})
+// deletes saved messages
+router.delete('/notes/:id', (req, res) => {
+
+    readFilesAsync('./db/db.json', 'utf8',)
+    .then((data) => {
+
+        let notes = JSON.parse(data);
+        let updatedNotes = notes.splice(0, 1);
+        writeFilesAsync('./db/db.json', JSON.stringify(updatedNotes))
+        .then((data) => {
+
+            console.log('Successfully Deleted!!!');
+
+        });
+        res.json(notes);
+    });
+}); 
 
 module.exports = router;
