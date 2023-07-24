@@ -6,7 +6,7 @@ const writeFilesAsync = util.promisify(fs.writeFile);
 
 
 // reads db.json and returns saved notes
-router.get('/api/notes', (req, res) => {
+router.get('/notes', (req, res) => {
 
     readFilesAsync('./db/db.json', 'utf8')
     .then((data) => { 
@@ -18,7 +18,7 @@ router.get('/api/notes', (req, res) => {
 });
 
 // adds new notes to the db.json and body
-router.post('/api/notes', (req, res) => {
+router.post('/notes', (req, res) => {
 
     readFilesAsync('./db/db.json', 'utf8')
     .then((data) => {
@@ -43,7 +43,7 @@ router.post('/api/notes', (req, res) => {
 });
 
 // deletes saved messages
-router.delete('/api/notes/:id', (req, res) => {
+router.delete('/notes/:id', (req, res) => {
 
     readFilesAsync('./db/db.json', 'utf8',)
     .then((data) => {
