@@ -1,5 +1,9 @@
 # NoteTaker
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+An express.js back end application used to write and save notes
+
 # About
 
 Your assignment is to modify starter code to create an application called Note Taker that can be used to write and save notes. This application will use an Express.js back end and will save and retrieve note data from a JSON file.
@@ -33,3 +37,20 @@ THEN that note appears in the right-hand column
 WHEN I click on the Write icon in the navigation at the top of the page
 THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
 ```
+
+## License
+
+  License used: MIT
+
+  For more information about the license please visit [https: //choosealicense.com/](https://choosealicense.com/)
+
+  ## Contributing
+  
+  fork my project, create a new feature branch and commit when done
+
+  ## Question
+
+  You may contact me with ny questions at:
+  
+  Email: [chuyieng@gmail.com	](chuyieng@gmail.com	)<br>
+  Github: [github.com/ChuyiengVang](https://github.com/ChuyiengVang)
